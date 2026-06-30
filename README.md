@@ -1,101 +1,56 @@
-# 2026CV
-# 课堂大作业提交方式
+# Group02 Code 说明
 
-以第一组为例子，组长创建目录Group01，然后上传代码、文档和ppt，命名方式如下：
+本目录主要包含模型训练代码和网页可视化系统代码，整体结构如下：
 
-Group01/code: 完整代码+运行说明文档
+```text
+code/
+├── ultralytics/      # YOLO/Ultralytics 模型相关代码
+├── WibeCode/         # 网页可视化系统代码
+└── train_self.py     # 自定义训练入口脚本
+```
 
-Group01/document：2026CV_G01_汇报总结.PPTX + 2026CV_G01_学号_姓名_大作业.docx
+## 1. 模型代码与训练
 
-（word文档含章节目录，尽可能详尽覆盖ppt汇报的内容和代码说明的内容，鼓励有些新想法。ppt文档里包含组员分工和贡献说明。）
+`ultralytics/` 文件夹下是模型相关文件，包括 YOLO 模型结构、训练、验证、推理等核心代码。
 
-截止提交时间：6/30 24:00     
+如需训练模型，可以直接使用当前目录下的 `train_self.py`：
 
-#  课堂作业汇报时间节点
- 
-第一次大作业（  03/23 ）
+```powershell
+python train_self.py
+```
 
-   演示系统搭建
+训练脚本中会加载 `uavyolo.yaml` 模型配置，并调用 Ultralytics 的 `model.train()` 进行训练。使用前请根据自己的环境检查或修改以下参数：
 
-第二次大作业（  04/20 ）
+- `data`：数据集配置文件路径
+- `epochs`：训练轮数
+- `imgsz`：输入图像尺寸
+- `batch`：批大小
+- `device`：训练设备，如 `cuda` 或 `cpu`
+- `resume`：是否继续上一次训练
 
-   1、研究现状
+训练结果通常会保存在 Ultralytics 默认的 `runs/` 目录下。
 
+## 2. 网页可视化系统
 
-  2、问题定义
+`WibeCode/` 路径下是网页代码，用于进行低空目标检测结果的可视化展示。
 
+该部分包含：
 
-  3、数据采集
+- Flask 后端入口 `app.py`
+- 前端页面与静态资源
+- 模型加载与检测服务代码
+- 上传图片、检测结果与示例图片相关目录
 
-  
-第三次大作业（  05/18 ）
+网页系统的安装、运行和测试方式请直接阅读：
 
- 
-  4、算法模块
+```text
+WibeCode/README.md
+```
 
- 
- 
-  
-第四次大作业（  06/08 ）
+通常进入 `WibeCode/` 后，安装依赖并运行 `app.py` 即可启动网页服务。
 
-  
-  5、原型系统
+## 3. 使用建议
 
+如果只需要重新训练模型，请优先查看并运行 `train_self.py`。
 
-  6、实验结果
-  
--------------------------------------------------------------
-
-大家可以直接用组号建立目录，然后在相应的目录下工作。
-
-# 2026CV 可供选择任务：
-
-1.多模态情感识别：基于视觉+音频模态，拓展识别的情绪类别，在MER2025/IEMOCAP 上测试最新算法；
-
-2.工业器件识别：在机械臂抓取过程中识别常见工业器件，输出6D参数，包括位置和三维朝向等
-
-2.视线跟踪：在视线估计gaze estimation基础上，实现视觉注意跟踪，记录注视点、注视持续时间、首次注视时长及视线转移模式等
-
-3.长时微表情识别：在相对比较长的时间里（比如10分钟），对人脸的微表情进行时空分析，或者统计分析，对人的情绪做判断
-
-4.特定物体识别：病理图像识别，从当前任务扩展到细胞检测和计数，进一步区分正常细胞和病变细胞
-
-5.场景人流检测：移动摄像头场景下特定人群的检测和计数，扩展到无人机航拍场景下的人体识别与计数
-
-6.人体动作识别：复杂康复动作的识别，包括典型康复动作的理解、动作规范性检测和动作计数
-
-7.显著物体检测：无精确标注情况下的显著物体检测问题，扩展到弱监督学习和自监督学习方法
-
-8.低空目标识别：针对低空经济的无人机视觉传感设备，在快速和相对远的距离测试和实现视觉识别算法
-
-
-
-#  分组+选题：
-
-	 组长	  组员                            任务编号
-1	XXX			XXX、XXX  						4
-
-
-
- 
-
-#  参考链接
-
-yolov7带tracker的仓库: https://github.com/JackWoo0831/Yolov7-tracker
-
-yolo v8: https://github.com/ultralytics/ultralytics?tab=readme-ov-file
-
-yolo v8也提供人体关节点的识别：https://docs.ultralytics.com/tasks/pose/#dataset-format
-
-
-显著物体检测：https://paperswithcode.com/task/salient-object-detection 
-
-人体动作识别：https://github.com/liutiel/AICoacher
-
-车道线检测：https://github.com/liuruijin17/LSTR
-
-疲劳度检测：见目录下代码
-
-机器人定位导航：http://wiki.ros.org/cn
-
-Adaboost： https://cloud.tencent.com/developer/article/17
+如果只需要运行演示网页或查看检测效果，请进入 `WibeCode/`，并按照 `WibeCode/README.md` 中的说明操作。
